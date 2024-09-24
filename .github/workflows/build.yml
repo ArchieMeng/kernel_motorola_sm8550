@@ -1,0 +1,36 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ "droidian" ]
+  pull_request:
+    branches: [ "droidian" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Make output dir
+      run: mkdir -pv /tmp/results
+    - name: clone device trees
+      run: git clone -b lineage-21 https://github.com/LineageOS/android_kernel_motorola_sm8550-devicetrees.git sm8550-devicetrees
+    - name: clone device modules
+      run: git clone -b lineage-21 https://github.com/LineageOS/android_kernel_motorola_sm8550-modules.git sm8550-modules
+    - name: Build packages in the container
+      run: |
+        docker run -it --rm \
+        -v ${{ github.workspace }}:/sources -v /tmp/results:/results -v ${{ github.workspace }}/sm8550-devicetrees:/sm8550-devicetrees\
+        -v ${{ github.workspace }}/sm8550-modules:/sm8550-modules quay.io/droidian/build-essential:current-amd64 /bin/bash -c '''
+        apt-get install linux-packaging-snippets
+        cd /sources
+        rm -f debian/control
+        debian/rules debian/control
+        RELENG_HOST_ARCH="arm64" releng-build-package
+        mv -v ../*.deb ../*.buildinfo ../*.changes /results
+        '''
+    - uses: actions/upload-artifact@v4
+      with:
+        path: /tmp/results
