@@ -52,6 +52,24 @@
       "parentUuid": "a263e374_1448f066",
       "revId": "9916699c6c8de10a74ebc84a7e7894b8a453d205",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf6a1c0_d385909e",
+        "filename": "drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 19252
+      },
+      "writtenOn": "2024-11-17T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96816aad_e9cbde99",
+      "revId": "9916699c6c8de10a74ebc84a7e7894b8a453d205",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
